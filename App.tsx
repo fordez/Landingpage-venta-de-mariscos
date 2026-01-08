@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { Suspense } from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import ProductCard from './components/ProductCard';
@@ -9,26 +9,28 @@ import { PRODUCTS } from './constants';
 
 const App: React.FC = () => {
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-slate-50 flex flex-col">
       <Header />
       
-      <main>
-        {/* 1. ATENCIÓN: El Gancho */}
+      <main className="flex-grow">
+        {/* FASE 1: ATENCIÓN - Hero con Gancho */}
         <Hero />
         
-        {/* 2. INTERÉS: Problemas y Soluciones */}
+        {/* FASE 2: INTERÉS - Agitar el Dolor y Solución */}
         <Features />
         
-        {/* 3. DESEO: El Menú Irresistible */}
-        <section id="productos" className="py-24">
+        {/* FASE 3: DESEO - Catálogo Visual Atractivo */}
+        <section id="productos" className="py-24 bg-white relative">
+          <div className="absolute top-0 left-0 w-full h-24 bg-gradient-to-b from-slate-50 to-white"></div>
           <div className="container mx-auto px-4">
-            <div className="max-w-3xl mx-auto text-center mb-16 space-y-4">
-              <span className="text-blue-600 font-bold tracking-widest uppercase text-sm">Empacado al Vacío</span>
-              <h2 className="text-4xl md:text-6xl font-extrabold text-slate-900 serif">Selección para Gente con Prisa</h2>
-              <p className="text-slate-500 text-lg">Nutrición real, sin conservantes, lista en minutos.</p>
+            <div className="max-w-3xl mx-auto text-center mb-20 space-y-6">
+              <span className="text-blue-600 font-black tracking-[0.3em] uppercase text-xs">Menú Premium</span>
+              <h2 className="text-4xl md:text-6xl font-extrabold text-slate-900 serif italic">Directo a tu Mesa</h2>
+              <div className="w-20 h-1.5 bg-blue-600 mx-auto rounded-full"></div>
+              <p className="text-slate-500 text-lg md:text-xl font-light">Filetes porcionados al vacío, listos para brillar en tu plato.</p>
             </div>
             
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
               {PRODUCTS.map((product) => (
                 <ProductCard key={product.id} product={product} />
               ))}
@@ -36,46 +38,46 @@ const App: React.FC = () => {
           </div>
         </section>
 
-        {/* 4. ACCIÓN/CIERRE: El Concierge IA */}
+        {/* FASE 4: ACCIÓN/CIERRE - Chef Concierge IA */}
         <ChefAssistant />
 
-        {/* 5. REFUERZO FINAL: Garantía y Redes */}
-        <section className="py-20 bg-slate-900">
-          <div className="container mx-auto px-4 text-center text-white space-y-10">
-            <h2 className="text-3xl md:text-5xl font-bold italic serif">Únete a la revolución del "Batch Cooking" inteligente</h2>
-            <p className="text-slate-400 max-w-xl mx-auto">Síguenos para tips de 60 segundos sobre cómo comer mejor sin gastar tu tiempo libre.</p>
-            <div className="flex justify-center gap-8">
-               <div className="flex flex-col items-center gap-2 group cursor-pointer">
-                  <div className="w-16 h-16 bg-white/5 rounded-3xl flex items-center justify-center group-hover:bg-blue-600 transition-all">
-                    <span className="text-2xl">📸</span>
-                  </div>
-                  <span className="text-xs uppercase font-bold tracking-widest text-slate-500 group-hover:text-white">Instagram</span>
-               </div>
-               <div className="flex flex-col items-center gap-2 group cursor-pointer">
-                  <div className="w-16 h-16 bg-white/5 rounded-3xl flex items-center justify-center group-hover:bg-blue-600 transition-all">
-                    <span className="text-2xl">🎵</span>
-                  </div>
-                  <span className="text-xs uppercase font-bold tracking-widest text-slate-500 group-hover:text-white">TikTok</span>
-               </div>
-               <div className="flex flex-col items-center gap-2 group cursor-pointer">
-                  <div className="w-16 h-16 bg-white/5 rounded-3xl flex items-center justify-center group-hover:bg-blue-600 transition-all">
-                    <span className="text-2xl">👤</span>
-                  </div>
-                  <span className="text-xs uppercase font-bold tracking-widest text-slate-500 group-hover:text-white">Facebook</span>
-               </div>
+        {/* FASE 5: SOCIAL PROOF Y REFUERZO FINAL */}
+        <section className="py-24 bg-white">
+          <div className="container mx-auto px-4 text-center space-y-12">
+            <div className="space-y-4">
+              <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 serif">¿Por qué esperar al fin de semana?</h2>
+              <p className="text-slate-500 text-xl font-light max-w-2xl mx-auto">Únete a los más de 5,000 clientes que han transformado sus cenas aburridas en festines gourmet.</p>
+            </div>
+            
+            <div className="flex flex-wrap justify-center gap-6 md:gap-12">
+               {['tiktok', 'instagram', 'facebook'].map(platform => (
+                 <a key={platform} href="#" className="flex flex-col items-center gap-4 group">
+                    <div className="w-20 h-20 rounded-[2rem] bg-slate-50 flex items-center justify-center text-3xl group-hover:bg-blue-600 group-hover:text-white transition-all transform group-hover:-translate-y-2 shadow-lg group-hover:shadow-blue-200">
+                      {platform === 'tiktok' ? '🎵' : platform === 'instagram' ? '📸' : '👤'}
+                    </div>
+                    <span className="text-xs font-black uppercase tracking-widest text-slate-400 group-hover:text-blue-600">{platform}</span>
+                 </a>
+               ))}
             </div>
           </div>
         </section>
       </main>
 
-      {/* Footer Minimalista de Cierre */}
-      <footer id="contacto" className="bg-white py-12 border-t border-slate-100">
-        <div className="container mx-auto px-4 text-center space-y-6">
-          <div className="flex items-center justify-center gap-2">
-            <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold">M</div>
-            <span className="text-lg font-bold tracking-tight text-slate-900">Mar & Carne Gourmet</span>
+      {/* Footer Minimalista de Cierre de Embudo */}
+      <footer id="contacto" className="bg-slate-900 py-16 text-white/50 text-sm border-t border-white/5">
+        <div className="container mx-auto px-4">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-8">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-blue-600 rounded-2xl flex items-center justify-center text-white font-black text-xl">M</div>
+              <span className="text-lg font-black text-white tracking-tight uppercase">Mar & Carne <span className="text-blue-500">Gourmet</span></span>
+            </div>
+            <div className="flex gap-8 font-bold uppercase tracking-widest text-[10px]">
+              <a href="#" className="hover:text-white transition-colors">Términos</a>
+              <a href="#" className="hover:text-white transition-colors">Privacidad</a>
+              <a href="#" className="hover:text-white transition-colors">Envíos</a>
+            </div>
+            <p className="font-medium">&copy; 2024. Sabor sin esfuerzo.</p>
           </div>
-          <p className="text-slate-500 text-sm">&copy; 2024. Sabor Gourmet, Tiempo Real. Hecho para gente que valora su salud.</p>
         </div>
       </footer>
     </div>
